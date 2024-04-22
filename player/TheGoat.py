@@ -33,21 +33,16 @@ class TheGOAT(Player):
 
         :return: une carte aléatoire selon un index random entre 0 et la taille du tableau hand
         """ 
-        i =  random.randint(0,len(self.hand))
-        return self.hand[i]
-
-
-
-    
-    def player_turn(self, game):
+        i =  random.randint(0,len(self.hand))-1
+        print('the hand of the bot',self.hand)
+        print('the random index',i)
+        return self.hand[i].value
+ 
+    def player_turn(self,game):
         """
         Gère le tour de jeu d'un joueur.
         :param game : le jeu en cours
         """
-        while True:
-            try:
-                carteChoisie = Card(self.getCardToPlay())
-                if carteChoisie in self.hand:
-                    return carteChoisie
-            except ValueError:
-                self.info("Veuillez entrer un nombre entier correspondant à une carte dans votre main.")
+        carteChoisie = Card(self.getCardToPlay())
+        return carteChoisie
+           
