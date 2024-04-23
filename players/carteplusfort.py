@@ -59,15 +59,11 @@ class CartePlusForte(Player):
         :param game: le jeu en cours
         :return: la ligne à enlever
         """
-        while True:
-            try:
-                for i,row in enumerate(game):
-                    score = game.total_cows(row)
-                    if(score < game.total_cows):
-                        ligne = i 
-                return ligne 
-
-            except ValueError:
-                self.info("Veuillez entrer un nombre entier entre 1 et 4.")
-
+        print(game.table)
+        for i,row in enumerate(game.table):
+            score = game.total_cows(row)
+            if(score <= game.total_cows(row)):
+                ligne = i
+                print(ligne)
+        return ligne 
 
