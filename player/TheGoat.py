@@ -2,9 +2,9 @@ from players.player import Player
 from game.card import Card
 import random
 
-class TheGOAT(Player):
+class Random(Player):
     def __init__(self):
-        self.name="The GOAAT"
+        self.name="Random"
         self.score = 0
         self.hand = []
 
@@ -19,10 +19,11 @@ class TheGOAT(Player):
         :param game: le jeu en cours
         :return: la ligne à enlever
         """
-        ligne = 1
+        score = game.total_cows(game.table[0])
         for i,row in enumerate(game.table):
-            score = game.total_cows(row)
-            if(score < game.total_cows(row)):
+            #print("lihne :",i," score ",score)
+            if(score >= game.total_cows(row)):
+                score = game.total_cows(row)
                 ligne = i
         return ligne
 
