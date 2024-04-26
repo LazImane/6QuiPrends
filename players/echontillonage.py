@@ -27,11 +27,12 @@ class Echantillions(Player):
     def getLineToRemove(self, game):
         score = game.total_cows(game.table[0])
         for i,row in enumerate(game.table):
-            #print("ligne :",i," score ",score)
+            print("the actual score of the line nb ",i,"is :",game.total_cows(row))
             if(score >= game.total_cows(row)):
+                print("line nb : ",i,"score : ",score)
                 score = game.total_cows(row)
                 ligne = i
-        print("la ligne : ",ligne)
+        print("la ligne : choisie ",ligne)
         return ligne
     
     def echantillon_cartes_adversaires(self):
@@ -40,6 +41,7 @@ class Echantillions(Player):
         et sous-ensemble de la carte qui peut-être joué par l'adversaire
         cela doit être d'une taille égale aux nombre de joueurs
         """
+        print("la main du bot : ", self.hand)
         #print("nombre de joueurs : ",self.nbJoueurs - 1)
         E = [] #contient un sous-ensemble hypothétiques des cartes des adversaires
         #print("testing ... ",E)
@@ -66,7 +68,7 @@ class Echantillions(Player):
             #print("testing cartesHyp after initialisation",cartesHypothèses)
         
         knownCards = self.constalreadyPlayedCards
-        print("sous-ensemble des cartes hypothèses des adversaires \n",E)
+        #print("sous-ensemble des cartes hypothèses des adversaires \n",E)
         return E
     
     def checkIfElementInList(self,elem,list):
@@ -176,9 +178,6 @@ class Echantillions(Player):
                 return least_risky_card
             else:
                 DifferenceOptimal += 1
-
-        
-
         
     def player_turn(self, game):
         self.constGame = copy.deepcopy(game)
