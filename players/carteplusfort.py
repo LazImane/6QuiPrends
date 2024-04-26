@@ -7,7 +7,7 @@ class TheStrong(Player):
         self.score=0
         self.hand=[]
 
-    def info(self):
+    def info(self,message):
         pass
 
     def carteMax(self):
