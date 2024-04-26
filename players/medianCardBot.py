@@ -42,11 +42,11 @@ class MedianCardBot(Player):
         #closest_to_median = min(valid_cards, key=lambda card: abs(card - valid_cards[median_index]))(I can't do the substuction without a function)
         closest_to_median = min(valid_cards, key=lambda card: abs(self.subtract_cards(card, valid_cards[median_index])))
         print(closest_to_median)
-        return closest_to_median.value
+        return closest_to_median
         
     
     def player_turn(self, game):
-        carteChoisie = Card(self.getCardToPlay(game))
+        carteChoisie = self.getCardToPlay(game)
         #print("cette table doit être égale à celle du jeu (non-modifiée) \n",self.constable)
         print('la carte choisie mediane',carteChoisie)
         return carteChoisie
