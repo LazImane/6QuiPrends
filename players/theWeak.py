@@ -8,7 +8,14 @@ class TheWeak(Player):
          self.hand = []
 
      def info(self, message):
-        print(f"{self.name}: {message}")
+        pass
+     
+     def carteMin(self):
+        carteMin = self.hand[0]
+        for card in self.hand :
+            if card.value <= carteMin.value :
+                carteMin = card
+        return carteMin
    
      def getCardToPlay(self):
       #le bot choisi la carte la plus faible est return la carte 
@@ -16,14 +23,14 @@ class TheWeak(Player):
         
         if not self.hand:  # Vérifie si la main du bot est vide
             return None
-        return min(self.hand)  # Choix de la carte la plus faible dans la main du bot
+        return self.carteMin()  # Choix de la carte la plus faible dans la main du bot
        
      def getLineToRemove(self, game):
       
-        score = game.total_cows(game.table[0])
-        for i, row in enumerate(game.table):
-            if score >= game.total_cows(row):
-                score = game.total_cows(row)
+        ligne = 1
+        for i,row in enumerate(game.table):
+            score = game.total_cows(row)
+            if(score < game.total_cows(row)):
                 ligne = i
         return ligne
 
