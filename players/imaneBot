@@ -1,0 +1,105 @@
+from players.player import Player
+from game.card import Card
+import copy
+
+class Imane(Player):
+    def __init__(self):
+        self.name="Imane"
+        self.score = 0
+        self.hand = []
+        self.constable = []
+
+    def info(self, message):
+        #on affiche pas de messages
+        pass
+
+    def getLineToRemove(self, game):
+        """
+        obtenir la ligne avec un score minimum
+
+        :param game: le jeu en cours
+        :return: la ligne à enlever
+        """
+        score = game.total_cows(game.table[0])
+        for i,row in enumerate(game.table):
+            #print("lihne :",i," score ",score)
+            if(score >= game.total_cows(row)):
+                score = game.total_cows(row)
+                ligne = i
+        return ligne
+    
+    def estProche(self,valeur,cible,tolerance):
+        return abs(valeur.value - cible.value) <= tolerance
+    
+    def tolerance(self,carte,cible):
+        return abs(carte.value - cible.value)
+    
+    def plays(self):
+        plays = []
+        for card in self.hand :
+            plays.append((self,card))
+        return plays
+    
+    def carteMin(self):
+        carteMin = self.hand[0]
+        for card in self.hand :
+            if card.value <= carteMin.value :
+                carteMin = card
+        return carteMin
+    
+    def verifiePlusPetiteTolerance(self,li):
+        tolerance = li[0]
+        print(tolerance)
+        for i in range(len(li)):
+            print("li",li[i])
+            if li[i][1] <= tolerance[1] :
+                tolerance = li[i]
+        return tolerance
+    
+    def choisirCarte(self):
+        print('hand of imane :',self.hand)
+        cartesETtolerances = []
+        cartes = []
+        cond = False
+        carteChoisie = 0
+        for i,row in enumerate(self.constable):
+            taille = len(row)-1
+            print('inside table')
+            for card in self.hand:
+                if(taille >= 4 and self.estProche(card,row[taille],4)):
+                    cond = True
+                if cond:
+                    continue
+                cartesETtolerances.append((card,self.tolerance(card,row[taille])))
+            if cond :
+                break
+            cartes.append(self.verifiePlusPetiteTolerance(cartesETtolerances))
+            cartesETtolerances = []
+        if cond :
+            carteChoisie = self.carteMin()
+        else :
+            carteChoisie = self.verifiePlusPetiteTolerance(cartes) [0]
+        print('carte Choisie',carteChoisie)
+        return carteChoisie
+        
+    def getCardToPlay(self):    
+        """
+        Choisie aléatoirement une carte.
+
+        :return: une carte aléatoire selon un index random entre 0 et la taille du tableau hand
+        """ 
+        return self.choisirCarte().value
+ 
+    def player_turn(self,game):
+        """
+        Gère le tour de jeu d'un joueur.
+        :param game : le jeu en cours
+        """
+        game.table.sort(key=lambda x: x[-1])
+        self.constable = copy.deepcopy(game.table)
+        print(self.constable)
+        carteChoisie = Card(self.getCardToPlay())
+        #print('hand of imane :',self.hand)
+        #print('carte Choisie',carteChoisie)
+        return carteChoisie
+           
