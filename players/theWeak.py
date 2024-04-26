@@ -1,6 +1,5 @@
 from players.player import Player
 from game.card import Card
-#from game.nimmtGame import NimmtGame 
 
 class TheWeak(Player):
      def __init__(self):
@@ -18,13 +17,15 @@ class TheWeak(Player):
         if not self.hand:  # Vérifie si la main du bot est vide
             return None
         return min(self.hand)  # Choix de la carte la plus faible dans la main du bot
+       
      def getLineToRemove(self, game):
-      #le bot choisi aleatoirement la ligne a enlever
-        #return: la ligne à enlever
-    
-        if not game.table:  # Vérifie si la table de jeu est vide
-            return None
-        return game.table.index(max(game.table))  # Choix de la ligne avec la plus grande somme
+      
+        ligne = 1
+        for i,row in enumerate(game.table):
+            score = game.total_cows(row)
+            if(score < game.total_cows(row)):
+                ligne = i
+        return ligne
 
      def player_turn(self, game):
       #gere le tour de jeu du bot
